@@ -11,7 +11,6 @@ def showImage(title, image, pos, effect = None):
 def to_sepia(image):
     # testando np.fromfunction
     sepia = np.fromfunction(lambda x,y,z: image[x,y,0]*0.393 + image[x,y,1]* 0.769 + image[x,y,2]* 0.189 if z==0 else (image[x,y,0]*0.349 + image[x,y,1]* 0.686 + image[x,y,2]* 0.168 if z==1 else image[x,y,0]*0.272 + image[x,y,1]* 0.534 + image[x,y,2]* 0.131),(image.shape[0], image.shape[1], 3), dtype = np.float32)
-    
     # sepia[:, :, 2] = image[:, :, 0] * 0.272 + image[:, :, 1] * 0.534 + image[:, :, 2] * 0.131
     # sepia[:, :, 1] = image[:, :, 0] * 0.349 + image[:, :, 1] * 0.686 + image[:, :, 2] * 0.168
     # sepia[:, :, 0] = image[:, :, 0] * 0.393 + image[:, :, 1] * 0.769 + image[:, :, 2] * 0.189

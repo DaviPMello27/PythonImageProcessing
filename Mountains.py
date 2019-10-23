@@ -14,7 +14,7 @@ def finder(image, y, x, color, count):
     image[y, x] = color
     for i in range(-1, 2):
         for j in range(-1, 2):
-            if(image[y + i, x + j] > 250 and not(i == 0 and j == 0) and count < 800):
+            if(image[y + i, x + j] > 250 and not(i == 0 and j == 0) and count < 400):
                 count += 1
                 print(count)
                 cv2.imshow("nice", image)
