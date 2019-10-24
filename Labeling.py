@@ -20,6 +20,7 @@ def finder(image, y, x, color):
 
 def findWhite(image):
     result = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2GRAY)
+    result = np.res
     findColor = 200
     count = 0
     for y in range(1, result.shape[0] - 1):
@@ -32,6 +33,28 @@ def findWhite(image):
     showImage("Result", result)
     return count
 
-img = cv2.imread("img/find.jpeg")
-print(findWhite(img))
+def check4connectivity(image,y, x):
+    north = image[y-1, x]
+    west = image[y, x-1]
+    
+
+def twoPass(image):
+    result = image[:,:,0]
+    result[result < 3] = 0 
+    result[result > 250] = 1
+    findColor = 200
+    count = 0
+    for y in range(result.shape[0]):
+        for x in range(result.shape[1]):
+            if result[y,x] == 1:
+                count+=1
+                check4connectivity(result,y, x)
+            
+
+   
+
+
+                
+img = cv2.imread("img/doublepass.jpeg")
+twoPass(img)
 plt.show()
