@@ -11,7 +11,8 @@ def showImage(title, image, pos = 111, effect = None):
 
 def fisrtPass(image):
     result = np.array(image)
-    currentLabel = 30
+    currentLabel = 0
+    links = []
     for y in range(image.shape[0]):
         for x in range(image.shape[1]):
             if(result[y, x] < 128):
@@ -25,7 +26,8 @@ def fisrtPass(image):
             west = result[y, x - 1]
             if(result[y, x] > 250):
                 if(north == 0 and west == 0):
-                    currentLabel += 15
+                    currentLabel += 1
+                    links.append([currentLabel])
                     result[y, x] = currentLabel
                 elif(north == 0 and west != 0):
                     result[y, x] = result[y, x - 1]
@@ -33,77 +35,13 @@ def fisrtPass(image):
                     result[y, x] = result[y - 1, x]
                 else:
                     result[y, x] = min(north, west)
+                    if(not(max(north, west) in links[min(north, west) - 1])):
+                        links[min(north, west) - 1].append(max(north, west))
             else:
                 result[y, x] = 0
-    print(currentLabel)
+    print(links)
     return result
-
-#def secondPass(image):
-
-
-                
-                  
-
-
-    
-
-
-
 
 img = cv2.cvtColor(cv2.imread("img/doublepass.jpeg"), cv2.COLOR_BGR2GRAY)
 showImage("Labelled image", cv2.cvtColor(fisrtPass(img), cv2.COLOR_GRAY2BGR), 132)
 plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
