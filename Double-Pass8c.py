@@ -28,14 +28,13 @@ def fisrtPass(image):
                     currentLabel += 1
                     links.append([currentLabel])
                     result[y, x] = currentLabel
-                elif(0 in directions):
+                elif(min(directions[directions > 0]) < max(directions)):
                     result[y, x] = min(directions[directions > 0])
-                    for i in range(4):
-                        for j in range(len(links[directions[i] - 1])):
-                            if(not(links[directions[i] - 1][j] in links[min(directions) - 1])):
-                                links[min(directions) - 1].append(links[directions[i]][j])
+                    for i in range(directions):
+                        if(directions[i] > result[y, x] and not(links[directions[i] - 1] in links[min(directions) - 1])):
+                            links[min(directions) - 1].append(links[directions[i]-1])
                 else:
-                    result[y, x] = min(directions)
+                    result[y, x] = min(directions[directions > 0]
             else:
                 result[y, x] = 0
     print(links)
