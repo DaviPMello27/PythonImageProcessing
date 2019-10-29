@@ -9,6 +9,14 @@ def showImage(title, image, pos = 111, effect = None):
     plot.set_title(title)
     plot.imshow(image, cmap = effect)
 
+def linksUnion(links, directions):
+    for i in range(4):
+        if(directions[i] != 0):
+            for j in range(len(links[directions[i] - 1])):
+                if(not(links[directions[i] - 1][j] in links[min(directions[directions > 0]) - 1]) and links[min(directions)][0] < links[directions[i] - 1][j]):
+                    links[min(directions[directions > 0]) - 1].append(links[directions[i] - 1][j])
+    return links
+
 def fisrtPass(image):
     result = np.array(image)
     result[result < 128] = 0
@@ -28,25 +36,21 @@ def fisrtPass(image):
                     currentLabel += 1
                     links.append([currentLabel])
                     result[y, x] = currentLabel
-                elif(min(directions[directions > 0]) < max(directions)):
+                elif(0 in directions):
                     result[y, x] = min(directions[directions > 0])
-                    for i in range(directions):
-                        if(directions[i] > result[y, x] and not(links[directions[i] - 1] in links[min(directions) - 1])):
-                            links[min(directions) - 1].append(links[directions[i]-1])
+                    links = linksUnion(links, directions)
                 else:
-                    result[y, x] = min(directions[directions > 0]
+                    result[y, x] = min(directions[directions > 0])
+                    links = linksUnion(links, directions)
             else:
                 result[y, x] = 0
-    print(links)
     for i in range(len(links) - 1, 0, -1):
         if(links[i][0] != i + 1):
             links.pop(i)
-    print(links)
     return result, links
 
 def secondPass(image, links):
     result = np.array(image)
-    print(result)
     for y in range(image.shape[0]):
         for x in range(image.shape[1]):
             for i in range(len(links)):
@@ -54,20 +58,8 @@ def secondPass(image, links):
                     result[y, x] = (i+1)*10
     return result, links
 
-img = cv2.cvtColor(cv2.imread("img/doublepass.jpeg"), cv2.COLOR_BGR2GRAY)
+img = cv2.cvtColor(cv2.imread("img/doublepasstest.jpeg"), cv2.COLOR_BGR2GRAY)
 img, links = fisrtPass(img)
 img, links = secondPass(img, links)
-print(img)
 showImage("Labelled", cv2.cvtColor(img, cv2.COLOR_GRAY2BGR), 122)
 plt.show()
-
-
-
-
-
-
-
-# for i in range(len(links[max(north, west) - 1])):
-#     if(not(links[max(north, west) - 1][i] in links[min(north, west) - 1])):
-#         links[min(north, west) - 1].append(links[max(north, west) - 1][i])
-# links[max(north, west) - 1][0] = min(north, west)
