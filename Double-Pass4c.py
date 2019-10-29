@@ -55,20 +55,10 @@ def secondPass(image, links):
         for x in range(image.shape[1]):
             for i in range(len(links)):
                 if(result[y, x] in links[i]):
-                    result[y, x] = (i+2)*36
+                    result[y, x] = links[i][0]*10
     return result, links
 
-# def secondPass(image, links):
-#     result = np.array(image)
-#     for y in range(image.shape[0]):
-#         for x in range(image.shape[1]):
-#             for i in range(len(links)):
-#                 for j in range(len(links[i])):
-#                     if(image[y, x] == links[i][j]):
-#                         result[y, x] = links[i][0] * 10 + 50
-#     return result, links
-
-img = cv2.cvtColor(cv2.imread("img/doublepass.jpeg"), cv2.COLOR_BGR2GRAY)
+img = cv2.cvtColor(cv2.imread("img/doublepasstest.jpeg"), cv2.COLOR_BGR2GRAY)
 img, links = fisrtPass(img)
 img, links = secondPass(img, links)
 print(img)

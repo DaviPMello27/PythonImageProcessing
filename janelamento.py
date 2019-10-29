@@ -45,17 +45,6 @@ def getThreshold(image, intensities):
     print(f"Min: {min}, Max: {max}")
     return [min, max]
 
-def getThresholdBad(image):
-    min, max = 255, 0
-    for y in range(image.shape[0]):
-        for x in range(image.shape[1]):
-            if(image[y, x] > max):
-                max = image[y, x]
-            if(image[y, x] < min):
-                min = image[y, x]
-    print(f"Min: {min}, Max: {max}")
-    return [min, max]
-
 def transform(image, minMax):
     for y in range(image.shape[0]):
         for x in range(image.shape[1]):
@@ -66,23 +55,17 @@ def transform(image, minMax):
                 image[y, x] = temp
 
 minMax = [255, 0]
-img = cv2.imread("img/einstein.png")
+img = cv2.imread("img/polen.tif")
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 #--show original--
-showImage("Original Image", 231)
+showImage("Original Image", 221)
 intensityVector = getIntensityPercentage(img)
-makeHistogram(img, 234, intensityVector)
-#--bad one--
-minMax = getThresholdBad(img)
-transform(img, minMax)
-showImage("Bad one", 232)
-intensityVector = getIntensityPercentage(img)
-makeHistogram(img, 235, intensityVector)
-#--good one--
-img = cv2.imread("img/einstein.png")
+makeHistogram(img, 223, intensityVector)
+#--show windowed--
+img = cv2.imread("img/polen.tif")
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 minMax = getThreshold(img, getIntensityPercentage(img))
 transform(img, minMax)
-showImage("Good one", 233)
-makeHistogram(img, 236, getIntensityPercentage(img))
+showImage("Good one", 222)
+makeHistogram(img, 224, getIntensityPercentage(img))
 plt.show()
