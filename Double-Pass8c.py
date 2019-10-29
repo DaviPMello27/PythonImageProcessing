@@ -11,10 +11,10 @@ def showImage(title, image, pos = 111, effect = None):
 
 def linksUnion(links, directions):
     for i in range(4):
-        if(directions[i] != 0):
+        if(directions[i] > min(directions)):
             for j in range(len(links[directions[i] - 1])):
                 if(not(links[directions[i] - 1][j] in links[min(directions[directions > 0]) - 1]) and links[min(directions)][0] < links[directions[i] - 1][j]):
-                    links[min(directions[directions > 0]) - 1].append(links[directions[i] - 1][j])
+                    links[links[min(directions[directions > 0]) - 1][0] - 1].append(links[directions[i] - 1][j])
                     links[directions[i] - 1][0] = 0
     return links
 
@@ -37,7 +37,7 @@ def fisrtPass(image):
                     currentLabel += 1
                     links.append([currentLabel])
                     result[y, x] = currentLabel
-                elif(0 in directions):
+                elif(min(directions[directions > 0]) < max(directions)):
                     result[y, x] = min(directions[directions > 0])
                     links = linksUnion(links, directions)
                 else:
@@ -46,7 +46,7 @@ def fisrtPass(image):
             else:
                 result[y, x] = 0
     for i in range(len(links) - 1, 0, -1):
-        if(links[i][0] != i + 1):
+        if(links[i][0] == 0):
             links.pop(i)
     return result, links
 

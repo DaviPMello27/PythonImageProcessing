@@ -31,6 +31,6 @@ def findWhite(image):
     showImage("Result", result)
     return count
             
-img = cv2.imread("img/twenty.jpeg")
+img = cv2.imread("img/doublepasstest.jpeg")
 findWhite(img)
 plt.show()
