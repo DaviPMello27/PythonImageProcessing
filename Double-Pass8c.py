@@ -15,6 +15,7 @@ def linksUnion(links, directions):
             for j in range(len(links[directions[i] - 1])):
                 if(not(links[directions[i] - 1][j] in links[min(directions[directions > 0]) - 1]) and links[min(directions)][0] < links[directions[i] - 1][j]):
                     links[min(directions[directions > 0]) - 1].append(links[directions[i] - 1][j])
+                    links[directions[i] - 1][0] = 0
     return links
 
 def fisrtPass(image):
@@ -55,11 +56,12 @@ def secondPass(image, links):
         for x in range(image.shape[1]):
             for i in range(len(links)):
                 if(result[y, x] in links[i]):
-                    result[y, x] = (i+1)*10
+                    result[y, x] = links[i][0]*10
     return result, links
 
 img = cv2.cvtColor(cv2.imread("img/doublepasstest.jpeg"), cv2.COLOR_BGR2GRAY)
 img, links = fisrtPass(img)
 img, links = secondPass(img, links)
+print(links)
 showImage("Labelled", cv2.cvtColor(img, cv2.COLOR_GRAY2BGR), 122)
 plt.show()

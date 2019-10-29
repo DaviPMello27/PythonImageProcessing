@@ -9,6 +9,13 @@ def showImage(title, image, pos = 111, effect = None):
     plot.set_title(title)
     plot.imshow(image, cmap = effect)
 
+def linksUnion(links, north, west):
+    for i in range(len(links[max(north, west) - 1])):
+        if(not(links[max(north, west) - 1][i] in links[min(north, west) - 1])):
+            links[min(north, west) - 1].append(links[max(north, west) - 1][i])
+    links[max(north, west) - 1][0] = min(north, west)
+    return links
+
 def fisrtPass(image):
     result = np.array(image)
     result[result < 128] = 0
@@ -32,10 +39,7 @@ def fisrtPass(image):
                     result[y, x] = result[y - 1, x]
                 else:
                     result[y, x] = min(north, west)
-                    for i in range(len(links[max(north, west) - 1])):
-                        if(not(links[max(north, west) - 1][i] in links[min(north, west) - 1])):
-                            links[min(north, west) - 1].append(links[max(north, west) - 1][i])
-                    links[max(north, west) - 1][0] = min(north, west)
+                    links = linksUnion(links, north, west)
             else:
                 result[y, x] = 0
     for i in range(len(links) - 1, 0, -1):
