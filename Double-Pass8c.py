@@ -24,11 +24,9 @@ def fisrtPass(image):
     result[result >= 128] = 255
     currentLabel = 0
     links = []
-    
     showImage("Original image", cv2.cvtColor(result, cv2.COLOR_GRAY2BGR), 121)
     for y in range(1, image.shape[0] - 1):
         for x in range(1, image.shape[1] - 1):
-            
             directions = [result[y, x - 1], result[y - 1, x - 1], result[y - 1, x], result[y - 1, x + 1]]
             directions = np.array(directions)
             west, northwest, north, northeast = directions

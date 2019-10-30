@@ -20,7 +20,6 @@ def calculateIntensity(image, plot):
             
     graph.set_title("Intensity")
     graph.set_xlabel("Intensity")
-    #print(intensities)
     plot.bar(intervals, intensities, align = "edge", width = 0.3)
 
 def transformPow(image, fact):
