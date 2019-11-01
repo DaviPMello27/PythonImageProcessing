@@ -57,7 +57,7 @@ def secondPass(image, links):
                     result[y, x] = links[i][0]*10
     return result, links
 
-img = cv2.cvtColor(cv2.imread("img/doublepasstest.jpeg"), cv2.COLOR_BGR2GRAY)
+img = cv2.cvtColor(cv2.imread("img/twenty.jpeg"), cv2.COLOR_BGR2GRAY)
 img, links = fisrtPass(img)
 img, links = secondPass(img, links)
 print(links)
