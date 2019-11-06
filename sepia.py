@@ -19,6 +19,5 @@ def to_sepia(image):
 img = cv2.imread("img/anime.jpg")
 showImage("Original", cv2.cvtColor(img, cv2.COLOR_RGB2BGR), 211)
 final1 = to_sepia(img)
-print(final1[:])
 showImage("Sepia Quick", final1, 212)
 plt.show()
